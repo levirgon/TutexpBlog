@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.tutexp.tutexpblog.Model.Blog;
 import com.vstechlab.easyfonts.EasyFonts;
 
@@ -84,6 +85,9 @@ class BlogRecyclerAdapter extends RecyclerView.Adapter {
         public void bind(Blog blog) {
             String title = blog.getTitle().getRendered();
             blogTitle.setText(title);
+//            Glide.with(mContext)
+//                    .load(blog.getLinks().getWpFeaturedMediaItem().get(0).getHref() )
+//                    .into(blogImageView);
 
         }
 

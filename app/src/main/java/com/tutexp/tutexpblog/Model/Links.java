@@ -15,6 +15,9 @@ public class Links{
 	@SerializedName("author")
 	private List<AuthorItem> author;
 
+	@SerializedName("wp:featuredmedia")
+	private List<WpFeaturedmediaItem> featuredmediaItems;
+
 	@SerializedName("about")
 	private List<AboutItem> about;
 
@@ -27,6 +30,12 @@ public class Links{
 	public List<RepliesItem> getReplies(){
 		return replies;
 	}
+
+	public List<WpFeaturedmediaItem> getWpFeaturedMediaItem(){
+		return featuredmediaItems;
+	}
+
+
 
 	public List<AuthorItem> getAuthor(){
 		return author;
