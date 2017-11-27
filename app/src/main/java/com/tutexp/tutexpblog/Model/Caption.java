@@ -4,7 +4,7 @@ import javax.annotation.Generated;
 import com.google.gson.annotations.SerializedName;
 
 @Generated("com.robohorse.robopojogenerator")
-public class Title{
+public class Caption{
 
 	@SerializedName("rendered")
 	private String rendered;
@@ -16,7 +16,7 @@ public class Title{
 	@Override
  	public String toString(){
 		return 
-			"Title{" + 
+			"Caption{" + 
 			"rendered = '" + rendered + '\'' + 
 			"}";
 		}

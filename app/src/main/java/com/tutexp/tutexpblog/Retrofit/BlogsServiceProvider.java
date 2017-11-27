@@ -1,8 +1,10 @@
 package com.tutexp.tutexpblog.Retrofit;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.tutexp.tutexpblog.Model.Blog;
+import com.tutexp.tutexpblog.Model.ImageContainerObject;
 import com.tutexp.tutexpblog.RetrofitInterFace.BlogApiInterface;
 import com.tutexp.tutexpblog.events.BlogsEvent;
 import com.tutexp.tutexpblog.events.ErrorEvent;
@@ -32,11 +34,13 @@ public class BlogsServiceProvider {
 
         blogsCall.enqueue(new Callback<List<Blog>>() {
             @Override
-            public void onResponse(Call<List<Blog>> call, Response<List<Blog>> response) {
+            public void onResponse(@NonNull Call<List<Blog>> call, @NonNull Response<List<Blog>> response) {
                 if (response.isSuccessful()) {
                     List<Blog> blogs = response.body();
                     EventBus.getDefault().post(new BlogsEvent(blogs));
-                    Log.d(TAG, "onResponse: Successful :" + blogs.toString());
+                    if (blogs != null) {
+                        Log.d(TAG, "onResponse: Successful :" + blogs.toString());
+                    }
                 } else {
                     try {
                         Log.d(TAG, "onResponse: Failed :" + response.errorBody().string());
@@ -55,6 +59,35 @@ public class BlogsServiceProvider {
             }
         });
 
+    }
+
+    public String getImageUrl(int mediaId) {
+        final String[] url = new String[1];
+        Call<ImageContainerObject> imageCall = mService.getImageObject(mediaId);
+        imageCall.enqueue(new Callback<ImageContainerObject>() {
+            @Override
+            public void onResponse(Call<ImageContainerObject> call, Response<ImageContainerObject> response) {
+                if (response.isSuccessful()) {
+
+                    ImageContainerObject imgObj = response.body();
+                    url[0] = imgObj.getMediaDetails().getSizes().getFull().getSourceUrl();
+                    Log.d(TAG, "onResponse: Successfull"+url[0]);
+
+                } else {
+                    try {
+                        Log.d(TAG, "onResponse: Failed :" + response.errorBody().string());
+                    } catch (IOException e) {
+                        Log.d(TAG, "onResponse: " + e.getLocalizedMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ImageContainerObject> call, Throwable t) {
+                Log.d(TAG, "onImageLoadFailure: " + t.getLocalizedMessage());
+            }
+        });
+        return url[0];
     }
 
 }

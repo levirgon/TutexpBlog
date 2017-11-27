@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.tutexp.tutexpblog.Model.Blog;
@@ -40,6 +41,7 @@ public class BlogListFragment extends Fragment {
     private String mFragmentTag;
     private BlogsServiceProvider mServiceProvider;
     private OnFragmentInteractionListener mListener;
+    private ProgressBar mProgressBar;
 
     public BlogListFragment() {
         // Required empty public constructor
@@ -68,6 +70,7 @@ public class BlogListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_blogs, container, false);
         mRecyclerView = view.findViewById(R.id.blog_recycler_view);
+        mProgressBar = view.findViewById(R.id.loading_progress);
         mListener = (OnFragmentInteractionListener) getActivity();
         mLinearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -114,6 +117,7 @@ public class BlogListFragment extends Fragment {
         switch (mFragmentTag) {
             case TagManager.LIST_FRAGMENT_TAG:
                 mServiceProvider.getAllPosts();
+                break;
         }
     }
 
@@ -124,12 +128,14 @@ public class BlogListFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onBlogsEvent(BlogsEvent event) {
+        mProgressBar.setVisibility(View.GONE);
         List<Blog> blogs = event.getBlogs();
         addToList(blogs);
     }
 
     private void addToList(List<Blog> blogs) {
         mAdapter.addAll(blogs);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

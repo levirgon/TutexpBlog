@@ -70,7 +70,6 @@ class BlogRecyclerAdapter extends RecyclerView.Adapter {
             blogAuthor = viewItem.findViewById(R.id.blog_author);
             blogTitle.setSelected(true);
             blogTitle.setTypeface(EasyFonts.caviarDreams(mContext));
-            blogAuthor.setTypeface(EasyFonts.caviarDreamsItalic(mContext));
             blogImageView = viewItem.findViewById(R.id.blog_cover_image);
             viewItem.setOnClickListener(this);
         }
@@ -84,11 +83,12 @@ class BlogRecyclerAdapter extends RecyclerView.Adapter {
 
         public void bind(Blog blog) {
             String title = blog.getTitle().getRendered();
-            Log.d(TAG, "addAll: "+title);
-
-            // String imageLink = blog.getLinks().getWpFeaturedmedia().get(0).getHref();
             blogTitle.setText(title);
+
         }
+
+
+
     }
 
     private static final String TAG = "BlogRecyclerAdapter";
