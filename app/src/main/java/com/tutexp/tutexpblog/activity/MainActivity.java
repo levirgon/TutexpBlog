@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements BlogListFragment.
     private void initialize() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
     }
 
     @Override
@@ -97,8 +96,6 @@ public class MainActivity extends AppCompatActivity implements BlogListFragment.
         if (id == R.id.categorie_filter) {
             showCategories();
 
-        } else if (id == R.id.action_settings) {
-            return true;
         }
 
         return super.onOptionsItemSelected(item);
