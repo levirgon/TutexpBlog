@@ -20,6 +20,7 @@ import com.tutexp.tutexpblog.R;
 import com.tutexp.tutexpblog.Retrofit.BlogsServiceProvider;
 import com.tutexp.tutexpblog.RetrofitInterFace.AppRater;
 import com.tutexp.tutexpblog.events.ErrorEvent;
+import com.tutexp.tutexpblog.events.LoadingEvent;
 import com.tutexp.tutexpblog.fragment.BlogDetailFragment;
 import com.tutexp.tutexpblog.fragment.BlogListFragment;
 import com.tutexp.tutexpblog.utils.TagManager;
@@ -74,8 +75,8 @@ public class MainActivity extends AppCompatActivity implements BlogListFragment.
         appRater.setLaunchesBeforePrompt(7);
         appRater.setPhrases("Rate This App",
                 "You're going great on this app, Would You Please Rate This App on Play Store",
-                "Rate Now","Later","Ignore");
-        appRater.setTargetUri("https://play.google.com/store/apps/details?id="+getApplicationContext().getPackageName());
+                "Rate Now", "Later", "Ignore");
+        appRater.setTargetUri("https://play.google.com/store/apps/details?id=" + getApplicationContext().getPackageName());
         appRater.show();
 
     }
@@ -125,25 +126,36 @@ public class MainActivity extends AppCompatActivity implements BlogListFragment.
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCategoryEvent(CategorieEvent event) {
         List<AllCategorie> categories = event.getCategories();
-        String[] titles = new String[categories.size()];
+       List<String> titles = new ArrayList<>();
 
-        for (int i = 0; i < categories.size(); i++) {
-            titles[i] = categories.get(i).getName().toUpperCase();
+        int i;
+        for (AllCategorie categorie : categories){
+            titles.add(categorie.getName().toUpperCase());
         }
+        titles.add("ALL");
         mCategories = categories;
-        showCategoryDialog(titles);
+
+        String[] categoryList = new String[titles.size()];
+        categoryList = titles.toArray(categoryList);
+
+        showCategoryDialog(categoryList);
     }
 
 
     private void showCategoryDialog(final String[] categories) {
+        final int last = categories.length-1;
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
         mBuilder.setTitle("Categories");
         mBuilder.setItems(categories, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                mServiceProvider.getPostsByCategory(mCategories.get(which).getId());
-//                Toast.makeText(MainActivity.this,categories[which],Toast.LENGTH_SHORT ).show();
+                if (which == last) {
+                    mServiceProvider.getAllPosts();
+                    EventBus.getDefault().post(new LoadingEvent());
+                } else {
+                    mServiceProvider.getPostsByCategory(mCategories.get(which).getId());
+                    EventBus.getDefault().post(new LoadingEvent());
+                }
             }
         });
         mBuilder.setCancelable(false);

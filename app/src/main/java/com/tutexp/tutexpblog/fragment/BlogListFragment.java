@@ -1,5 +1,6 @@
 package com.tutexp.tutexpblog.fragment;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,15 +10,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.tutexp.tutexpblog.adapter.BlogRecyclerAdapter;
 import com.tutexp.tutexpblog.Model.Blog;
 import com.tutexp.tutexpblog.R;
 import com.tutexp.tutexpblog.Retrofit.BlogsServiceProvider;
+import com.tutexp.tutexpblog.adapter.BlogRecyclerAdapter;
 import com.tutexp.tutexpblog.events.BlogsEvent;
 import com.tutexp.tutexpblog.events.ErrorEvent;
+import com.tutexp.tutexpblog.events.LoadingEvent;
 import com.tutexp.tutexpblog.utils.TagManager;
 
 import org.greenrobot.eventbus.EventBus;
@@ -44,7 +46,7 @@ public class BlogListFragment extends Fragment {
     private String mFragmentTag;
     private BlogsServiceProvider mServiceProvider;
     private OnFragmentInteractionListener mListener;
-    private ProgressBar mProgressBar;
+    private ImageView mLogoImage;
 
     public BlogListFragment() {
         // Required empty public constructor
@@ -73,11 +75,12 @@ public class BlogListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_blogs, container, false);
         mRecyclerView = view.findViewById(R.id.blog_recycler_view);
-        mProgressBar = view.findViewById(R.id.loading_progress);
+        mLogoImage = view.findViewById(R.id.logo_view);
         mListener = (OnFragmentInteractionListener) getActivity();
         mLinearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        spin(mLogoImage);
         return view;
     }
 
@@ -111,13 +114,14 @@ public class BlogListFragment extends Fragment {
             mRecyclerView.setAdapter(mAdapter);
             loadBlogList();
         } else {
+            mLogoImage.setVisibility(View.GONE);
             mRecyclerView.setAdapter(mAdapter);
         }
 
     }
 
     private void loadBlogList() {
-
+        mLogoImage.setVisibility(View.VISIBLE);
         switch (mFragmentTag) {
             case TagManager.LIST_FRAGMENT_TAG:
                 mServiceProvider.getAllPosts();
@@ -132,9 +136,22 @@ public class BlogListFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onBlogsEvent(BlogsEvent event) {
-        mProgressBar.setVisibility(View.GONE);
+        mLogoImage.setVisibility(View.GONE);
         List<Blog> blogs = event.getBlogs();
         addToList(blogs);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLoadingEvent(LoadingEvent event) {
+        mLogoImage.setVisibility(View.VISIBLE);
+        spin(mLogoImage);
+    }
+
+    private void spin(View view) {
+        ObjectAnimator flip = ObjectAnimator.ofFloat(view, "rotationY", 0f, 360f);
+        flip.setDuration(3000);
+        flip.setRepeatCount(100);
+        flip.start();
     }
 
     private void addToList(List<Blog> blogs) {
@@ -145,7 +162,7 @@ public class BlogListFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onErrorEvent(ErrorEvent event) {
-        mProgressBar.setVisibility(View.GONE);
+        mLogoImage.setVisibility(View.GONE);
         String s = event.getErrorMessage();
         Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
     }
