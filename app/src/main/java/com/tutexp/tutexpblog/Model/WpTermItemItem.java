@@ -4,58 +4,44 @@ import javax.annotation.Generated;
 import com.google.gson.annotations.SerializedName;
 
 @Generated("com.robohorse.robopojogenerator")
-public class AuthorItem{
-
-	@SerializedName("avatar_urls")
-	private AvatarUrls avatarUrls;
+public class WpTermItemItem{
 
 	@SerializedName("_links")
 	private Links links;
 
-	@SerializedName("name")
-	private String name;
-
 	@SerializedName("link")
 	private String link;
 
-	@SerializedName("description")
-	private String description;
+	@SerializedName("name")
+	private String name;
 
 	@SerializedName("id")
 	private int id;
 
-	@SerializedName("url")
-	private String url;
+	@SerializedName("taxonomy")
+	private String taxonomy;
 
 	@SerializedName("slug")
 	private String slug;
 
-	public AvatarUrls getAvatarUrls(){
-		return avatarUrls;
-	}
-
 	public Links getLinks(){
 		return links;
-	}
-
-	public String getName(){
-		return name;
 	}
 
 	public String getLink(){
 		return link;
 	}
 
-	public String getDescription(){
-		return description;
+	public String getName(){
+		return name;
 	}
 
 	public int getId(){
 		return id;
 	}
 
-	public String getUrl(){
-		return url;
+	public String getTaxonomy(){
+		return taxonomy;
 	}
 
 	public String getSlug(){
@@ -65,14 +51,12 @@ public class AuthorItem{
 	@Override
  	public String toString(){
 		return 
-			"AuthorItem{" + 
-			"avatar_urls = '" + avatarUrls + '\'' + 
-			",_links = '" + links + '\'' + 
-			",name = '" + name + '\'' + 
+			"WpTermItemItem{" + 
+			"_links = '" + links + '\'' + 
 			",link = '" + link + '\'' + 
-			",description = '" + description + '\'' + 
+			",name = '" + name + '\'' + 
 			",id = '" + id + '\'' + 
-			",url = '" + url + '\'' + 
+			",taxonomy = '" + taxonomy + '\'' + 
 			",slug = '" + slug + '\'' + 
 			"}";
 		}

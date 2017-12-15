@@ -1,10 +1,8 @@
 package com.tutexp.tutexpblog.Model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
-
 import javax.annotation.Generated;
+import com.google.gson.annotations.SerializedName;
 
 @Generated("com.robohorse.robopojogenerator")
 public class Blog{
@@ -35,6 +33,9 @@ public class Blog{
 
 	@SerializedName("featured_media")
 	private int featuredMedia;
+
+	@SerializedName("_embedded")
+	private Embedded embedded;
 
 	@SerializedName("modified")
 	private String modified;
@@ -120,6 +121,10 @@ public class Blog{
 		return featuredMedia;
 	}
 
+	public Embedded getEmbedded(){
+		return embedded;
+	}
+
 	public String getModified(){
 		return modified;
 	}
@@ -197,6 +202,7 @@ public class Blog{
 			",title = '" + title + '\'' + 
 			",content = '" + content + '\'' + 
 			",featured_media = '" + featuredMedia + '\'' + 
+			",_embedded = '" + embedded + '\'' + 
 			",modified = '" + modified + '\'' + 
 			",id = '" + id + '\'' + 
 			",categories = '" + categories + '\'' + 

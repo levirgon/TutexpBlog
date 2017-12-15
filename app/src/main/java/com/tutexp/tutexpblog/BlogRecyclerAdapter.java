@@ -6,15 +6,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tutexp.tutexpblog.Model.Blog;
-import com.vstechlab.easyfonts.EasyFonts;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by noushad on 11/26/17.
@@ -63,14 +63,13 @@ class BlogRecyclerAdapter extends RecyclerView.Adapter {
     private class BlogVH extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView blogTitle;
         private TextView blogAuthor;
-        private ImageView blogImageView;
+        private CircleImageView blogImageView;
 
         public BlogVH(View viewItem) {
             super(viewItem);
             blogTitle = viewItem.findViewById(R.id.blog_title);
             blogAuthor = viewItem.findViewById(R.id.blog_author);
             blogTitle.setSelected(true);
-            blogTitle.setTypeface(EasyFonts.caviarDreams(mContext));
             blogImageView = viewItem.findViewById(R.id.blog_cover_image);
             viewItem.setOnClickListener(this);
         }
@@ -85,12 +84,14 @@ class BlogRecyclerAdapter extends RecyclerView.Adapter {
         public void bind(Blog blog) {
             String title = blog.getTitle().getRendered();
             blogTitle.setText(title);
+            String linkString = blog.getEmbedded().getWpFeaturedmedia().get(0).getSourceUrl();
+            Glide.with(mContext).load(linkString).into(blogImageView);
+
 //            Glide.with(mContext)
 //                    .load(blog.getLinks().getWpFeaturedMediaItem().get(0).getHref() )
 //                    .into(blogImageView);
 
         }
-
 
 
     }

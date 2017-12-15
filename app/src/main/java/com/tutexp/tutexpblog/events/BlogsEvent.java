@@ -21,3 +21,4 @@ public class BlogsEvent {
         return mBlogResponse;
     }
 }
+

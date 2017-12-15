@@ -3,8 +3,9 @@ package com.tutexp.tutexpblog.Retrofit;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.tutexp.tutexpblog.Model.AllCategorie;
 import com.tutexp.tutexpblog.Model.Blog;
-import com.tutexp.tutexpblog.Model.ImageContainerObject;
+import com.tutexp.tutexpblog.Model.CategorieEvent;
 import com.tutexp.tutexpblog.RetrofitInterFace.BlogApiInterface;
 import com.tutexp.tutexpblog.events.BlogsEvent;
 import com.tutexp.tutexpblog.events.ErrorEvent;
@@ -61,33 +62,34 @@ public class BlogsServiceProvider {
 
     }
 
-    public String getImageUrl(int mediaId) {
-        final String[] url = new String[1];
-        Call<ImageContainerObject> imageCall = mService.getImageObject(mediaId);
-        imageCall.enqueue(new Callback<ImageContainerObject>() {
+    public void getCategories() {
+        mService.getAllCategories().enqueue(new Callback<List<AllCategorie>>() {
             @Override
-            public void onResponse(Call<ImageContainerObject> call, Response<ImageContainerObject> response) {
+            public void onResponse(Call<List<AllCategorie>> call, Response<List<AllCategorie>> response) {
                 if (response.isSuccessful()) {
 
-                    ImageContainerObject imgObj = response.body();
-                    url[0] = imgObj.getMediaDetails().getSizes().getFull().getSourceUrl();
-                    Log.d(TAG, "onResponse: Successfull"+url[0]);
+                    List<AllCategorie> categories = response.body();
+                    EventBus.getDefault().post(new CategorieEvent(categories));
+                    if (categories != null) {
+                        Log.d(TAG, "onResponse: Successful :" + categories.toString());
+                    }
 
                 } else {
                     try {
-                        Log.d(TAG, "onResponse: Failed :" + response.errorBody().string());
+                        Log.d(TAG, "onResponse: Failed to get Categories :" + response.errorBody().string());
+                        EventBus.getDefault().post(new ErrorEvent("Error Occurred!!"));
                     } catch (IOException e) {
-                        Log.d(TAG, "onResponse: " + e.getLocalizedMessage());
+                        e.printStackTrace();
+                        EventBus.getDefault().post(new ErrorEvent(e.getMessage()));
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<ImageContainerObject> call, Throwable t) {
-                Log.d(TAG, "onImageLoadFailure: " + t.getLocalizedMessage());
+            public void onFailure(Call<List<AllCategorie>> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
+                EventBus.getDefault().post(new ErrorEvent(t.getMessage()));
             }
         });
-        return url[0];
     }
-
 }

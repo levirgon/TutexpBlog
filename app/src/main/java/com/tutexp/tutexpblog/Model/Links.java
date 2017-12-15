@@ -1,52 +1,48 @@
 package com.tutexp.tutexpblog.Model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
-import javax.annotation.Generated;
-
-@Generated("com.robohorse.robopojogenerator")
 public class Links{
-
-	@SerializedName("replies")
-	private List<RepliesItem> replies;
-
-	@SerializedName("author")
-	private List<AuthorItem> author;
-
-	@SerializedName("wp:featuredmedia")
-	private List<WpFeaturedmediaItem> featuredmediaItems;
-
-	@SerializedName("about")
+	private List<WpPostTypeItem> wpPostType;
+	private List<CuriesItem> curies;
 	private List<AboutItem> about;
-
-	@SerializedName("self")
 	private List<SelfItem> self;
-
-	@SerializedName("collection")
 	private List<CollectionItem> collection;
 
-	public List<RepliesItem> getReplies(){
-		return replies;
+	public void setWpPostType(List<WpPostTypeItem> wpPostType){
+		this.wpPostType = wpPostType;
 	}
 
-	public List<WpFeaturedmediaItem> getWpFeaturedMediaItem(){
-		return featuredmediaItems;
+	public List<WpPostTypeItem> getWpPostType(){
+		return wpPostType;
 	}
 
+	public void setCuries(List<CuriesItem> curies){
+		this.curies = curies;
+	}
 
+	public List<CuriesItem> getCuries(){
+		return curies;
+	}
 
-	public List<AuthorItem> getAuthor(){
-		return author;
+	public void setAbout(List<AboutItem> about){
+		this.about = about;
 	}
 
 	public List<AboutItem> getAbout(){
 		return about;
 	}
 
+	public void setSelf(List<SelfItem> self){
+		this.self = self;
+	}
+
 	public List<SelfItem> getSelf(){
 		return self;
+	}
+
+	public void setCollection(List<CollectionItem> collection){
+		this.collection = collection;
 	}
 
 	public List<CollectionItem> getCollection(){
@@ -57,8 +53,8 @@ public class Links{
  	public String toString(){
 		return 
 			"Links{" + 
-			"replies = '" + replies + '\'' + 
-			",author = '" + author + '\'' + 
+			"wp:post_type = '" + wpPostType + '\'' + 
+			",curies = '" + curies + '\'' + 
 			",about = '" + about + '\'' + 
 			",self = '" + self + '\'' + 
 			",collection = '" + collection + '\'' + 

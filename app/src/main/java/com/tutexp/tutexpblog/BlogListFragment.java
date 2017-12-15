@@ -106,10 +106,11 @@ public class BlogListFragment extends Fragment {
         if (mAdapter == null) {
             mAdapter = new BlogRecyclerAdapter(getActivity().getApplicationContext(), mListener, mFragmentTag);
             mRecyclerView.setAdapter(mAdapter);
+            loadBlogList();
         } else {
             mRecyclerView.setAdapter(mAdapter);
         }
-        loadBlogList();
+
     }
 
     private void loadBlogList() {
@@ -140,6 +141,7 @@ public class BlogListFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onErrorEvent(ErrorEvent event) {
+        mProgressBar.setVisibility(View.GONE);
         String s = event.getErrorMessage();
         Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
     }

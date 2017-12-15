@@ -1,6 +1,6 @@
 package com.tutexp.tutexpblog.Model;
 
-public class CollectionItem{
+public class WpPostTypeItem{
 	private String href;
 
 	public void setHref(String href){
@@ -14,7 +14,7 @@ public class CollectionItem{
 	@Override
  	public String toString(){
 		return 
-			"CollectionItem{" + 
+			"WpPostTypeItem{" + 
 			"href = '" + href + '\'' + 
 			"}";
 		}

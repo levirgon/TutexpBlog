@@ -56,14 +56,31 @@
                         android:layout_height="match_parent"
                         android:fontFamily="@font/advent_pro_thin"
                         android:padding="8dp"
-                        android:paddingEnd="8dp"
+                        android:paddingEnd="0dp"
                         android:paddingStart="0dp"
-                        android:text="XP.blog"
+                        android:text="XP"
                         android:textColor="@android:color/holo_orange_dark"
                         android:textSize="24sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/tute_text"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"/>
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/advent_pro_thin"
+                        android:padding="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingStart="0dp"
+                        android:text=".blog"
+                        android:textColor="@android:color/holo_orange_dark"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0"/>
                 </LinearLayout>
