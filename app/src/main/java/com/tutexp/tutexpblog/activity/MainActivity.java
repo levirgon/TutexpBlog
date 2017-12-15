@@ -44,6 +44,14 @@ public class MainActivity extends AppCompatActivity implements BlogListFragment.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AppRater appRater = new AppRater(this);
+        appRater.setDaysBeforePrompt(3);
+        appRater.setLaunchesBeforePrompt(7);
+        appRater.setPhrases("Rate This App",
+                "You're going great on this app, Would You Please Rate This App on Play Store",
+                "Rate Now","Later","Ignore");
+        appRater.setTargetUri("https://play.google.com/store/apps/details?id="+getApplicationContext().getPackageName());
+        appRater.show();
         mCategories = new ArrayList<>();
         mServiceProvider = new BlogsServiceProvider();
         initialize();
@@ -69,14 +77,7 @@ public class MainActivity extends AppCompatActivity implements BlogListFragment.
     private void initialize() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        AppRater appRater = new AppRater(this);
-        appRater.setDaysBeforePrompt(0);
-        appRater.setLaunchesBeforePrompt(0);
-        appRater.setPhrases("Rate This App",
-                "You're going great on this app, Would You Please Rate This App on Play Store",
-                "Rate Now","Later","Ignore");
-        appRater.setTargetUri("https://play.google.com/store/apps/details?id="+getApplicationContext().getPackageName());
-        appRater.show();
+
 
     }
 
