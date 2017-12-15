@@ -73,7 +73,6 @@ public class BlogsServiceProvider {
                     if (categories != null) {
                         Log.d(TAG, "onResponse: Successful :" + categories.toString());
                     }
-
                 } else {
                     try {
                         Log.d(TAG, "onResponse: Failed to get Categories :" + response.errorBody().string());
@@ -91,5 +90,35 @@ public class BlogsServiceProvider {
                 EventBus.getDefault().post(new ErrorEvent(t.getMessage()));
             }
         });
+    }
+
+    public void getPostsByCategory(int id) {
+
+        mService.getPostByCategory(id).enqueue(new Callback<List<Blog>>() {
+            @Override
+            public void onResponse(Call<List<Blog>> call, Response<List<Blog>> response) {
+                if (response.isSuccessful()) {
+                    List<Blog> blogs = response.body();
+                    EventBus.getDefault().post(new BlogsEvent(blogs));
+                    if (blogs != null) {
+                        Log.d(TAG, "onResponse: Successful :" + blogs.toString());
+                    }
+                } else {
+                    try {
+                        Log.d(TAG, "onResponse: Failed :" + response.errorBody().string());
+                        EventBus.getDefault().post(new ErrorEvent("Error Occurred!!"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        EventBus.getDefault().post(new ErrorEvent(e.getMessage()));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Blog>> call, Throwable t) {
+
+            }
+        });
+
     }
 }

@@ -1,4 +1,4 @@
-package com.tutexp.tutexpblog;
+package com.tutexp.tutexpblog.utils;
 
 /**
  * Created by noushad on 11/26/17.

@@ -1,4 +1,4 @@
-package com.tutexp.tutexpblog;
+package com.tutexp.tutexpblog.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,10 +12,13 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.tutexp.tutexpblog.adapter.BlogRecyclerAdapter;
 import com.tutexp.tutexpblog.Model.Blog;
+import com.tutexp.tutexpblog.R;
 import com.tutexp.tutexpblog.Retrofit.BlogsServiceProvider;
 import com.tutexp.tutexpblog.events.BlogsEvent;
 import com.tutexp.tutexpblog.events.ErrorEvent;
+import com.tutexp.tutexpblog.utils.TagManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -135,6 +138,7 @@ public class BlogListFragment extends Fragment {
     }
 
     private void addToList(List<Blog> blogs) {
+        mAdapter.clear();
         mAdapter.addAll(blogs);
         mAdapter.notifyDataSetChanged();
     }
@@ -157,4 +161,6 @@ public class BlogListFragment extends Fragment {
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
+
+
 }

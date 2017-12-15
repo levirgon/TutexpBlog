@@ -7,6 +7,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 /**
  * Created by noushad on 11/26/17.
@@ -18,6 +19,11 @@ public interface BlogApiInterface {
 
     @GET("categories")
     Call<List<AllCategorie>> getAllCategories();
+
+    @GET("posts?_embed")
+    Call<List<Blog>> getPostByCategory(@Query("categories") int id);
+
+
 
 
 }

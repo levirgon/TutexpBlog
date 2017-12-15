@@ -1,6 +1,6 @@
 package com.tutexp.tutexpblog.Retrofit;
 
-import com.tutexp.tutexpblog.URLManager;
+import com.tutexp.tutexpblog.utils.URLManager;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

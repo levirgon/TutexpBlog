@@ -1,4 +1,4 @@
-package com.tutexp.tutexpblog;
+package com.tutexp.tutexpblog.activity;
 
 import android.content.Intent;
 import android.os.Bundle;

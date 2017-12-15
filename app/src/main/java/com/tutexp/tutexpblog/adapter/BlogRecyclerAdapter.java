@@ -1,4 +1,4 @@
-package com.tutexp.tutexpblog;
+package com.tutexp.tutexpblog.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tutexp.tutexpblog.Model.Blog;
+import com.tutexp.tutexpblog.R;
+import com.tutexp.tutexpblog.fragment.BlogListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by noushad on 11/26/17.
  */
 
-class BlogRecyclerAdapter extends RecyclerView.Adapter {
+public class BlogRecyclerAdapter extends RecyclerView.Adapter {
 
     private final Context mContext;
     private final BlogListFragment.OnFragmentInteractionListener mListener;
@@ -84,12 +86,12 @@ class BlogRecyclerAdapter extends RecyclerView.Adapter {
         public void bind(Blog blog) {
             String title = blog.getTitle().getRendered();
             blogTitle.setText(title);
-            String linkString = blog.getEmbedded().getWpFeaturedmedia().get(0).getSourceUrl();
-            Glide.with(mContext).load(linkString).into(blogImageView);
-
-//            Glide.with(mContext)
-//                    .load(blog.getLinks().getWpFeaturedMediaItem().get(0).getHref() )
-//                    .into(blogImageView);
+            if(blog.getEmbedded().getWpFeaturedmedia()!=null) {
+                String linkString = blog.getEmbedded().getWpFeaturedmedia().get(0).getSourceUrl();
+                Glide.with(mContext).load(linkString).into(blogImageView);
+            }else{
+                Glide.with(mContext).load(R.drawable.tutexp).into(blogImageView);
+            }
 
         }
 
@@ -114,13 +116,10 @@ class BlogRecyclerAdapter extends RecyclerView.Adapter {
             mBlogList.remove(position);
             notifyItemRemoved(position);
         }
-
     }
 
     public void clear() {
-        while (getItemCount() > 0) {
-            remove(mBlogList.get(0));
-        }
+        mBlogList = new ArrayList<>();
     }
 
 }
