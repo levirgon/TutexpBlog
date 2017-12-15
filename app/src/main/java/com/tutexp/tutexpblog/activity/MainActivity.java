@@ -18,6 +18,7 @@ import com.tutexp.tutexpblog.Model.AllCategorie;
 import com.tutexp.tutexpblog.Model.CategorieEvent;
 import com.tutexp.tutexpblog.R;
 import com.tutexp.tutexpblog.Retrofit.BlogsServiceProvider;
+import com.tutexp.tutexpblog.RetrofitInterFace.AppRater;
 import com.tutexp.tutexpblog.events.ErrorEvent;
 import com.tutexp.tutexpblog.fragment.BlogDetailFragment;
 import com.tutexp.tutexpblog.fragment.BlogListFragment;
@@ -68,6 +69,14 @@ public class MainActivity extends AppCompatActivity implements BlogListFragment.
     private void initialize() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        AppRater appRater = new AppRater(this);
+        appRater.setDaysBeforePrompt(3);
+        appRater.setLaunchesBeforePrompt(7);
+        appRater.setPhrases("Rate This App",
+                "You're going great on this app, Would You Please Rate This App on Play Store",
+                "Rate Now","Later","Ignore");
+        appRater.setTargetUri("https://play.google.com/store/apps/details?id="+getApplicationContext().getPackageName());
+        appRater.show();
 
     }
 
