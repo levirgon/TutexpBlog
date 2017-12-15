@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.tutexp.tutexpblog.RetrofitInterFace.AppRater;
+import com.tutexp.tutexpblog.fragment.BlogDetailFragment;
 import com.tutexp.tutexpblog.fragment.BlogListFragment;
 import com.tutexp.tutexpblog.utils.TagManager;
 
@@ -90,11 +91,6 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 
