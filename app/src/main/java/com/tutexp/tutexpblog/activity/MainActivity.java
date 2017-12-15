@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements BlogListFragment.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         AppRater appRater = new AppRater(this);
-        appRater.setDaysBeforePrompt(3);
-        appRater.setLaunchesBeforePrompt(7);
+        appRater.setDaysBeforePrompt(0);
+        appRater.setLaunchesBeforePrompt(0);
         appRater.setPhrases("Rate This App",
                 "You're going great on this app, Would You Please Rate This App on Play Store",
                 "Rate Now","Later","Ignore");
