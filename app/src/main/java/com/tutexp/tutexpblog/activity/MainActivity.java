@@ -105,8 +105,8 @@ public class MainActivity extends AppCompatActivity implements BlogListFragment.
         int id = item.getItemId();
         if (id == R.id.categorie_filter) {
             showCategories();
-        }
 
+        }
 
         return super.onOptionsItemSelected(item);
     }
